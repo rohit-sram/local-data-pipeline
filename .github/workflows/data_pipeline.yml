@@ -2,7 +2,7 @@ name: data-pipeline-workflow
 
 on:
   schedule:
-    - cron: "35 0 * * *"
+    - cron: "30 0 * * *"
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.9" ## change later
+          python-version: "3.12" ## change later
           cache: "pip"
       - name: Install dependencies
         run: pip install -r requirements.txt
@@ -33,7 +33,7 @@ jobs:
           git add .
           git diff --staged --quiet || echo "changes=true" >> $GITHUB_ENV
       - name: Commit and push if changes
-        if: env.changes == 'true' # if changes made push new data to repo
+        if: env.changes == 'true'
         run: |
           git commit -m "updated video index"
           git push
